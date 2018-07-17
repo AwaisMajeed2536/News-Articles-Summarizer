@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llArticleView"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_80sdp"
+    android:layout_margin="@dimen/_3sdp"
+    android:background="@color/light_grey">
+
+    <ImageView
+        android:id="@+id/ivArticleImage"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"/>
+
+    <VideoView
+        android:id="@+id/vvArticleVideo"
+        android:layout_width="@dimen/_100sdp"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tvArticleHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxLines="2"
+            android:textSize="@dimen/_14ssp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_alignParentTop="true"/>
+
+        <TextView
+            android:id="@+id/tvArticleDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:textColor="@color/light_black"/>
+    </RelativeLayout>
+</LinearLayout>

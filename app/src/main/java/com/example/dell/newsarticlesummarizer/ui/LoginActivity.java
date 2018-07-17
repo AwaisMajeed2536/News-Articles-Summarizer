@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.example.dell.newsarticlesummarizer.BaseActivity;
 import com.example.dell.newsarticlesummarizer.R;
 import com.example.dell.newsarticlesummarizer.utils.Constants;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -17,8 +18,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     private GoogleSignInClient mGoogleSignInClient;
     private SignInButton signInButton;
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         } else {
             // you are already signed
             signInButton.setVisibility(View.GONE);
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, ArticlesActivity.class);
             startActivity(intent);
         }
     }

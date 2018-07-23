@@ -10,8 +10,9 @@
     <ImageView
         android:id="@+id/ivArticleImage"
         android:layout_width="@dimen/_100sdp"
+        android:src="@mipmap/ic_launcher_round"
         android:layout_height="match_parent"
-        android:scaleType="fitXY"
+        android:scaleType="center"
         android:adjustViewBounds="true"/>
 
     <VideoView

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "734154774074",
+    "firebase_url": "https://news-article-summarizer.firebaseio.com",
+    "project_id": "news-article-summarizer",
+    "storage_bucket": "news-article-summarizer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:734154774074:android:9c31ec468b5814d7",
+        "android_client_info": {
+          "package_name": "com.example.dell.newsarticlesummarizer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "734154774074-j97m4areprlbd7v20vled8ngm1p36aeh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dell.newsarticlesummarizer",
+            "certificate_hash": "23ee158fcbac21ce799bf0522347d6eec4451a38"
+          }
+        },
+        {
+          "client_id": "734154774074-23p7jdk025uo704l2no48pcp00osfkl6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA07-N3stmXMuqhHnJUk3biLBbvfdNXkw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "734154774074-23p7jdk025uo704l2no48pcp00osfkl6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

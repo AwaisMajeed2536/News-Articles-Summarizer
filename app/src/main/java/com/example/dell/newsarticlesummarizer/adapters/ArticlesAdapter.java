@@ -44,7 +44,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
     public void onBindViewHolder(@NonNull ArticlesViewHolder holder, int position) {
         Article article = articles.get(position);
         holder.llArticleView.setBackgroundColor(context.getResources().getColor(article.isSelected() ? R.color.light_grey : R.color.off_white));
-        holder.tvArticleHeading.setText(new SimpleDateFormat("dd/MM/yyyy", Locale.US).format(article.getArticleHeading()));
+        holder.tvArticleHeading.setText(article.getArticleHeading());
         holder.ivArticleImage.setImageURI(Uri.parse(article.getImageUrl()));
         holder.tvArticleDate.setText(article.getArticleDate());
     }

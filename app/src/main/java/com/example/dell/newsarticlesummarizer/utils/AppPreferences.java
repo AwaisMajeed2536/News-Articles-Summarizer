@@ -13,11 +13,17 @@ public class AppPreferences {
 
     private static SharedPreferences preferences;
 
-    public static void getInstance(BaseActivity activity){
+    private static final String USER_LOGGED_IN = "USER_LOGGED_IN";
+
+    public AppPreferences(BaseActivity activity){
         preferences = PreferenceManager.getDefaultSharedPreferences(activity);
     }
 
-    public void storeThis(String string){
-        preferences.edit().putString("key", string).apply();
+    public void setLoggedIn(boolean loggedIn) {
+        preferences.edit().putBoolean(USER_LOGGED_IN, loggedIn).apply();
+    }
+
+    public boolean isLoggedIn() {
+        return preferences.getBoolean(USER_LOGGED_IN, false);
     }
 }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/llArticleView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_80sdp"
+    android:layout_margin="@dimen/_5sdp"
+    android:background="@color/white"
+    android:elevation="@dimen/_5sdp">
+
+    <TextView
+        android:id="@+id/tvArticleHeading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/_14ssp"
+        android:textStyle="bold"
+        android:layout_toLeftOf="@+id/open_article_btn"
+        android:padding="@dimen/_5sdp"
+        android:layout_centerVertical="true"
+        android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/open_article_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/rounded_background"
+            android:textSize="@dimen/_14ssp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:text="open"/>
+</RelativeLayout>

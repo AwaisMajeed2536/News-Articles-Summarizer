@@ -12,20 +12,24 @@ import com.example.dell.newsarticlesummarizer.BaseActivity;
 import com.example.dell.newsarticlesummarizer.R;
 import com.example.dell.newsarticlesummarizer.interfaces.Callback;
 import com.example.dell.newsarticlesummarizer.models.User;
+import com.example.dell.newsarticlesummarizer.utils.AppPreferences;
 import com.example.dell.newsarticlesummarizer.utils.FirebaseUtils;
+import com.example.dell.newsarticlesummarizer.utils.Utils;
 
 public class SignUpActivity extends BaseActivity implements View.OnClickListener {
 
     private EditText nameEt, emailEt, passwordEt;
     private User userData;
     private ProgressDialog progressDialog;
+    private AppPreferences appPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         initView();
-
+        Utils.isNetworkAvailable(this, false, true);
+        appPreferences = new AppPreferences(this);
     }
 
     private void registerUser() {
@@ -34,26 +38,37 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
             @Override
             public void call(Boolean aBoolean) {
                 progressDialog.dismiss();
-                if(aBoolean == null || !aBoolean){
+                if(aBoolean == null || !aBoolean) {
                     showError("Sign up failed!");
                 } else {
                     startActivity(new Intent(SignUpActivity.this, ArticlesActivity.class));
+                    appPreferences.setLoggedIn(true);
+                    finish();
                 }
             }
         });
     }
 
     private boolean inputsAreOk() {
-        if (TextUtils.isEmpty(nameEt.getText())) {
+        CharSequence name = nameEt.getText(), email = emailEt.getText(), password = passwordEt.getText();
+        if (Utils.isEmpty(name)) {
             nameEt.setError("Required Field");
             nameEt.requestFocus();
             return false;
-        } else if (TextUtils.isEmpty(emailEt.getText())) {
+        } else if (Utils.isEmpty(email)) {
             emailEt.setError("Required Field");
             emailEt.requestFocus();
             return false;
-        } else if (TextUtils.isEmpty(passwordEt.getText())) {
+        } else if (Utils.isEmpty(password)) {
             passwordEt.setError("Required Field");
+            passwordEt.requestFocus();
+            return false;
+        } else if (!Utils.isValidEmail(email)) {
+            emailEt.setError("Invalid Email!");
+            emailEt.requestFocus();
+            return false;
+        } else if (password.length() < 6) {
+            passwordEt.setError("Password should be minimum 6 characters!");
             passwordEt.requestFocus();
             return false;
         }
@@ -65,8 +80,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
     }
 
     private void initView() {
-        findViewById(R.id.cardview).setOnClickListener(this);
-        findViewById(R.id.signup).setOnClickListener(this);
+        findViewById(R.id.sign_up_btn).setOnClickListener(this);
         nameEt = findViewById(R.id.name_tv);
         passwordEt = findViewById(R.id.pasword_tv);
         emailEt = findViewById(R.id.email_tv);
@@ -78,9 +92,11 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.cardview) {
-            if (inputsAreOk())
+        if (v.getId() == R.id.sign_up_btn) {
+            if (inputsAreOk()) {
+                hideKeyboard();
                 registerUser();
+            }
         }
     }
 }

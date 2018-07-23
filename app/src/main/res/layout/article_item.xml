@@ -1,29 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/llArticleView"
     android:layout_width="match_parent"
     android:layout_height="@dimen/_80sdp"
-    android:layout_margin="@dimen/_3sdp"
-    android:background="@color/light_grey">
+    android:layout_margin="@dimen/_5sdp"
+    android:elevation="@dimen/_5sdp"
+    android:background="@color/white">
 
-    <ImageView
-        android:id="@+id/ivArticleImage"
-        android:layout_width="@dimen/_100sdp"
-        android:src="@mipmap/ic_launcher_round"
-        android:layout_height="match_parent"
-        android:scaleType="center"
-        android:adjustViewBounds="true"/>
+    <RelativeLayout
+        android:id="@+id/rlImgVidContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <VideoView
-        android:id="@+id/vvArticleVideo"
-        android:layout_width="@dimen/_100sdp"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        <ImageView
+            android:id="@+id/ivArticleImage"
+            android:layout_width="@dimen/_100sdp"
+            android:src="@mipmap/ic_launcher_round"
+            android:layout_height="match_parent"
+            android:scaleType="center"
+            android:adjustViewBounds="true"/>
+
+        <VideoView
+            android:id="@+id/vvArticleVideo"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/rlImgVidContainer">
 
         <TextView
             android:id="@+id/tvArticleHeading"
@@ -42,4 +50,4 @@
             android:layout_alignParentBottom="true"
             android:textColor="@color/light_black"/>
     </RelativeLayout>
-</LinearLayout>
+</RelativeLayout>

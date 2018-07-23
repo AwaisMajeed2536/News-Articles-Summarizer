@@ -2,5 +2,5 @@
     <string name="app_name">News Article Summarizer</string>
     <string name="no_network_available">No Network Available!</string>
     <string name="no_internet_heading">No Internet Connection</string>
-    <string name="selected_article_empty">No </string>
+    <string name="selected_article_empty">No Item Selected!</string>
 </resources>

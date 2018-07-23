@@ -2,15 +2,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#239cd3">
+    android:background="@color/light_black">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NAS"
+        android:textColor="@color/orange"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:textSize="@dimen/_30sdp"
+        android:textStyle="bold"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true">
 
     <EditText
         android:id="@+id/email_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="@dimen/_100sdp"
-        android:layout_marginTop="@dimen/_100sdp"
+        android:layout_marginLeft="@dimen/_80sdp"
+        android:background="@drawable/rounded_background"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:paddingLeft="@dimen/_5sdp"
+        android:paddingRight="@dimen/_5sdp"
+        android:textSize="@dimen/_14ssp"
         android:hint="Email"
         android:inputType="textEmailAddress" />
 
@@ -21,21 +41,27 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/email_login"
         android:layout_centerHorizontal="true"
-        android:layout_marginLeft="@dimen/_100sdp"
+        android:layout_marginLeft="@dimen/_80sdp"
         android:layout_marginTop="@dimen/_20sdp"
+        android:background="@drawable/rounded_background"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:paddingLeft="@dimen/_5sdp"
+        android:paddingRight="@dimen/_5sdp"
+        android:textSize="@dimen/_14ssp"
         android:hint="Pasword"
         android:inputType="textPassword" />
 
 
     <Button
         android:id="@+id/login_btn"
-        android:layout_width="@dimen/_300sdp"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/pasword_login"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="@dimen/_80sdp"
         android:layout_marginTop="@dimen/_30sdp"
-        android:background="#f4f377"
+        android:background="@drawable/rounded_background"
         android:text="SIGN IN"
         android:textSize="@dimen/_15sdp"
         android:textStyle="bold" />
@@ -47,20 +73,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/login_btn"
         android:layout_centerHorizontal="true"
-        android:background="@color/red"
+        android:background="@color/orange"
         android:layout_marginTop="@dimen/_10sdp"/>
 
     <TextView
         android:id="@+id/sign_up_link"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sign up"
+        android:text="No account yet? create one"
         android:layout_below="@+id/sign_in_button"
-        android:layout_alignParentEnd="true"
-        android:textColor="@color/black"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/white"
         android:textSize="@dimen/_12ssp"
-        android:layout_marginTop="@dimen/_5sdp"
-        android:layout_marginRight="@dimen/_10sdp"
-        android:textStyle="bold"/>
+        android:padding="@dimen/_5sdp"
+        android:layout_marginTop="@dimen/_10sdp" />
+    </RelativeLayout>
 
 </RelativeLayout>

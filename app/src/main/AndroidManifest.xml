@@ -20,12 +20,18 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.MainActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ui.ArticlesActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.SignUpActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".ui.WebViewActvity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ChangePasswordActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".ui.ChangeNameActivity"
             android:screenOrientation="portrait"/>
     </application>
 

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/show_articles"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="Show Articles" />
+        <item
+            android:id="@+id/change_name"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Change Name" />
+        <item
+            android:id="@+id/change_password"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Change Password" />
+        <!--<item-->
+            <!--android:id="@+id/nav_manage"-->
+            <!--android:icon="@drawable/ic_menu_manage"-->
+            <!--android:title="Tools" />-->
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <!--<item-->
+                <!--android:id="@+id/nav_share"-->
+                <!--android:icon="@drawable/ic_menu_share"-->
+                <!--android:title="Share" />-->
+            <item
+                android:id="@+id/sign_out"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Sign Out" />
+        </menu>
+    </item>
+
+</menu>

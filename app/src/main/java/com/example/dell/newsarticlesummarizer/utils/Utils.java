@@ -28,6 +28,10 @@ public class Utils {
         return charSequence == null || charSequence.length() == 0;
     }
 
+    public static boolean isValidPassword(CharSequence charSequence) {
+        return charSequence != null && charSequence.length() >=6;
+    }
+
     public static boolean isNotEmpty(CharSequence charSequence) {
         return !isEmpty(charSequence);
     }

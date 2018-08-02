@@ -3,7 +3,7 @@
     android:id="@+id/llArticleView"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/_80sdp"
+    android:layout_height="@dimen/_100sdp"
     android:layout_margin="@dimen/_5sdp"
     android:background="@color/white"
     android:elevation="@dimen/_5sdp">
@@ -15,9 +15,22 @@
         android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         android:layout_toLeftOf="@+id/open_article_btn"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:padding="@dimen/_5sdp"
-        android:layout_centerVertical="true"
         android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/tvArticleSummary"
+        android:layout_width="match_parent"
+        android:layout_toLeftOf="@+id/open_article_btn"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:textSize="@dimen/_12ssp"
+        android:textColor="@color/light_black"
+        android:layout_below="@id/tvArticleHeading"
+        android:padding="@dimen/_5sdp"/>
 
         <Button
             android:id="@+id/open_article_btn"

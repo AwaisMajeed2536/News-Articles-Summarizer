@@ -1,50 +1,42 @@
 package com.example.dell.newsarticlesummarizer.models;
 
 public class Article {
-    private String articleId;
-    private String articleDescription;
-    private String articleHeading;
-    private String articleDate;
-    private String articleLink;
-    private String imageUrl;
+    private String linkSummary;
+    private String linkTitle;
+    private String linkURL;
     private boolean selected = false;
 
-    public Article(String articleId, String articleDescription, String articleHeading, String imageUrl, String articleDate, String articleLink) {
-        this.articleId = articleId;
-        this.articleDescription = articleDescription;
-        this.articleHeading = articleHeading;
-        this.articleDate = articleDate;
-        this.articleLink = articleLink;
-        this.imageUrl = imageUrl;
+    public Article() {
     }
 
-    public Article(String articleHeading, String articleLink) {
-        this.articleHeading = articleHeading;
-        this.articleLink = articleLink;
+    public Article(String linkSummary, String linkTitle, String linkURL) {
+        this.linkSummary = linkSummary;
+        this.linkTitle = linkTitle;
+        this.linkURL = linkURL;
     }
 
-    public String getArticleId() {
-        return articleId;
+    public String getLinkSummary() {
+        return linkSummary;
     }
 
-    public void setArticleId(String articleId) {
-        this.articleId = articleId;
+    public void setLinkSummary(String linkSummary) {
+        this.linkSummary = linkSummary;
     }
 
-    public String getArticleDescription() {
-        return articleDescription;
+    public String getLinkTitle() {
+        return linkTitle;
     }
 
-    public void setArticleDescription(String articleDescription) {
-        this.articleDescription = articleDescription;
+    public void setLinkTitle(String linkTitle) {
+        this.linkTitle = linkTitle;
     }
 
-    public String getArticleHeading() {
-        return articleHeading;
+    public String getLinkURL() {
+        return linkURL;
     }
 
-    public void setArticleHeading(String articleHeading) {
-        this.articleHeading = articleHeading;
+    public void setLinkURL(String linkURL) {
+        this.linkURL = linkURL;
     }
 
     public boolean isSelected() {
@@ -53,29 +45,5 @@ public class Article {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
-    }
-
-    public String getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public String getArticleDate() {
-        return articleDate;
-    }
-
-    public void setArticleDate(String articleDate) {
-        this.articleDate = articleDate;
-    }
-
-    public String getArticleLink() {
-        return articleLink;
-    }
-
-    public void setArticleLink(String articleLink) {
-        this.articleLink = articleLink;
     }
 }

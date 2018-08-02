@@ -1,5 +1,6 @@
 package com.example.dell.newsarticlesummarizer.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -11,19 +12,26 @@ import java.util.prefs.PreferencesFactory;
 
 public class AppPreferences {
 
-    private static SharedPreferences preferences;
-
     private static final String USER_LOGGED_IN = "USER_LOGGED_IN";
 
-    public AppPreferences(BaseActivity activity){
-        preferences = PreferenceManager.getDefaultSharedPreferences(activity);
+    public static SharedPreferences getInstance(Context activity){
+        return PreferenceManager.getDefaultSharedPreferences(activity);
     }
 
-    public void setLoggedIn(boolean loggedIn) {
-        preferences.edit().putBoolean(USER_LOGGED_IN, loggedIn).apply();
+    public static void setLoggedIn(String loggedIn, SharedPreferences preferences) {
+        preferences.edit().putString(USER_LOGGED_IN, loggedIn).apply();
     }
 
-    public boolean isLoggedIn() {
-        return preferences.getBoolean(USER_LOGGED_IN, false);
+    public static boolean isLoggedIn(SharedPreferences preferences) {
+        String email = preferences.getString(USER_LOGGED_IN, "");
+        return Utils.isNotEmpty(email) && !email.equals("");
+    }
+
+    public static String getUserEmail(SharedPreferences preferences){
+        return preferences.getString(USER_LOGGED_IN, "");
+    }
+
+    public static String getUserEmail(Activity activity){
+        return PreferenceManager.getDefaultSharedPreferences(activity).getString(USER_LOGGED_IN, "");
     }
 }

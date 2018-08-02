@@ -51,7 +51,8 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
     public void onBindViewHolder(@NonNull ArticlesViewHolder holder, final int position) {
         final Article article = articles.get(position);
         holder.llArticleView.setBackgroundColor(ContextCompat.getColor(context, article.isSelected() ? R.color.off_white : R.color.white));
-        holder.tvArticleHeading.setText(article.getArticleHeading());
+        holder.tvArticleHeading.setText(article.getLinkTitle());
+        holder.tvArticleSummary.setText(article.getLinkSummary());
 //        holder.ivArticleImage.setImageURI(Uri.parse(article.getImageUrl()));
 //        holder.tvArticleDate.setText(article.getArticleDate());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -65,7 +66,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, WebViewActvity.class);
-                intent.putExtra(WebViewActvity.WEB_URL, article.getArticleLink());
+                intent.putExtra(WebViewActvity.WEB_URL, article.getLinkURL());
                 context.startActivity(intent);
             }
         });
@@ -80,6 +81,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         private View llArticleView;
         private TextView tvArticleHeading;
         private Button openArticleBtn;
+        private TextView tvArticleSummary;
 //        private TextView tvArticleDate;
 //        private ImageView ivArticleImage;
 //        private VideoView vvArticleVideo;
@@ -90,6 +92,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
             llArticleView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
             tvArticleHeading = itemView.findViewById(R.id.tvArticleHeading);
             openArticleBtn = itemView.findViewById(R.id.open_article_btn);
+            tvArticleSummary = itemView.findViewById(R.id.tvArticleSummary);
 //            tvArticleDate = itemView.findViewById(R.id.tvArticleDate);
 //            ivArticleImage = itemView.findViewById(R.id.ivArticleImage);
 //            vvArticleVideo = itemView.findViewById(R.id.vvArticleVideo);

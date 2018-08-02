@@ -2,6 +2,7 @@ package com.example.dell.newsarticlesummarizer.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -32,7 +33,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private String email, password;
     private EditText emailEt, passwordEt;
     private ProgressDialog progressDialog;
-    private AppPreferences appPreferences;
+    private SharedPreferences appPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         setContentView(R.layout.activity_login);
         initView();
         Utils.isNetworkAvailable(this, false, true);
-        appPreferences = new AppPreferences(this);
+        appPreferences = AppPreferences.getInstance(this);
         GoogleApi.initGoogle(this);
     }
 
@@ -63,7 +64,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onStart() {
         super.onStart();
-        if(appPreferences.isLoggedIn()) {
+        if(AppPreferences.isLoggedIn(appPreferences)) {
             goToMainActivity();
             finish();
         } else {
@@ -80,14 +81,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         } else {
             // you are already signed
             signInButton.setVisibility(View.GONE);
+            AppPreferences.setLoggedIn(account.getEmail(), appPreferences);
             goToMainActivity();
-            appPreferences.setLoggedIn(true);
-            finish();
+//            finish();
         }
     }
 
     private void goToMainActivity() {
-        Intent intent = new Intent(this, ArticlesActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
@@ -117,6 +118,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     if (aBoolean == null) {
                         showError("Some went wrong! Please Try Again");
                     } else if (aBoolean) {
+                        AppPreferences.setLoggedIn(email, appPreferences);
                         goToMainActivity();
                     } else {
                         showError("Invalid Username or Password!");

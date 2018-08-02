@@ -25,7 +25,7 @@ public class FileUtils {
             while (( line = buffreader.readLine()) != null) {
                 String[] arr = line.split(" ", 2);
                 if(arr.length > 1) {
-                    articles.add(new Article(arr[1], arr[0]));
+//                    articles.add(new Article(arr[1], arr[0]));
                 }
             }
         } catch (IOException e) {

@@ -2,6 +2,7 @@ package com.example.dell.newsarticlesummarizer.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -21,7 +22,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
     private EditText nameEt, emailEt, passwordEt;
     private User userData;
     private ProgressDialog progressDialog;
-    private AppPreferences appPreferences;
+    private SharedPreferences appPreferences;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,7 +30,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
         setContentView(R.layout.activity_signup);
         initView();
         Utils.isNetworkAvailable(this, false, true);
-        appPreferences = new AppPreferences(this);
+        appPreferences = AppPreferences.getInstance(this);
     }
 
     private void registerUser() {
@@ -41,8 +42,8 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                 if(aBoolean == null || !aBoolean) {
                     showError("Sign up failed!");
                 } else {
-                    startActivity(new Intent(SignUpActivity.this, ArticlesActivity.class));
-                    appPreferences.setLoggedIn(true);
+                    startActivity(new Intent(SignUpActivity.this, MainActivity.class));
+                    AppPreferences.setLoggedIn(userData.getEmail(), appPreferences);
                     finish();
                 }
             }

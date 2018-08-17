@@ -1,15 +1,11 @@
 package com.example.dell.newsarticlesummarizer.utils;
 
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.example.dell.newsarticlesummarizer.interfaces.Callback;
 import com.example.dell.newsarticlesummarizer.models.Article;
 import com.example.dell.newsarticlesummarizer.models.User;
-import com.example.dell.newsarticlesummarizer.ui.MainActivity;
-import com.example.dell.newsarticlesummarizer.ui.SignUpActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -26,7 +22,7 @@ public class FirebaseUtils {
     public static final String USER_URL = BASE_URL + "users/";
     public static final String DATABASE_URL = BASE_URL + "database/";
 
-    public static void signIn(final User user, final Callback<Boolean> callback) {
+    public static void signIn(final User user, final SharedPreferences appPreferences, final Callback<Boolean> callback) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance()
                 .getReferenceFromUrl(USER_URL + user.getEmail().replace(".", "_"));
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -39,6 +35,7 @@ public class FirebaseUtils {
                 } else {
                     User data = dataSnapshot.getValue(User.class);
                     if (data != null && user.getPassword().equals(data.getPassword())) {
+                        AppPreferences.setUserName(user.getUsername(), appPreferences);
                         callback.call(true);
 //                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     } else {

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
@@ -44,6 +43,7 @@ public class SignUpActivity extends BaseActivity implements View.OnClickListener
                 } else {
                     startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                     AppPreferences.setLoggedIn(userData.getEmail(), appPreferences);
+                    AppPreferences.setUserName(userData.getUsername(), appPreferences);
                     finish();
                 }
             }

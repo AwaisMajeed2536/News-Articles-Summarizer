@@ -4,18 +4,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 
 import com.example.dell.newsarticlesummarizer.BaseActivity;
@@ -26,14 +22,11 @@ import com.example.dell.newsarticlesummarizer.interfaces.OnItemClickListener;
 import com.example.dell.newsarticlesummarizer.models.Article;
 import com.example.dell.newsarticlesummarizer.services.GoogleApi;
 import com.example.dell.newsarticlesummarizer.utils.AppPreferences;
-import com.example.dell.newsarticlesummarizer.utils.FileUtils;
 import com.example.dell.newsarticlesummarizer.utils.FirebaseUtils;
-import com.example.dell.newsarticlesummarizer.utils.Utils;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class MainActivity extends BaseActivity
@@ -45,6 +38,7 @@ public class MainActivity extends BaseActivity
     private List<Article> selectedList = new ArrayList<>();
     private SharedPreferences preferences;
     private TextView emailTv;
+    private TextView nameTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +84,8 @@ public class MainActivity extends BaseActivity
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         emailTv = navigationView.getHeaderView(0).findViewById(R.id.emailTv);
+        nameTv = navigationView.getHeaderView(0).findViewById(R.id.nameTv);
+        nameTv.setText(AppPreferences.getUserName(preferences));
         emailTv.setText(AppPreferences.getUserEmail(preferences));
     }
 
@@ -114,6 +110,8 @@ public class MainActivity extends BaseActivity
             Intent intent = new Intent(this, ArticlesActivity.class);
             startActivity(intent);
             // Handle the camera action
+        } else if (id == R.id.show_news) {
+            startActivity(new Intent(this, NewsPaperActivity.class));
         } else if (id == R.id.change_name) {
             startActivity(new Intent(this, ChangeNameActivity.class));
         } else if (id == R.id.change_password) {
@@ -123,6 +121,7 @@ public class MainActivity extends BaseActivity
                 signOut();
             } else {
                 AppPreferences.setLoggedIn(null, preferences);
+                AppPreferences.setUserName(null, preferences);
                 finish();
             }
         }/* else if (id == R.id.nav_share) {

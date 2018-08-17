@@ -20,6 +20,7 @@ public class WebViewActvity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
         getSupportActionBar().setTitle("News Page");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         webView = findViewById(R.id.webView);
         progressDialog = new ProgressDialog(this);
         progressDialog.setTitle("Loading Page");
@@ -38,5 +39,11 @@ public class WebViewActvity extends BaseActivity {
             webView.getSettings().setJavaScriptEnabled(true);
             webView.loadUrl(intent.getStringExtra(WEB_URL));
         }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
     }
 }

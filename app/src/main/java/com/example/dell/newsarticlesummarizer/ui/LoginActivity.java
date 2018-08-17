@@ -82,6 +82,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             // you are already signed
             signInButton.setVisibility(View.GONE);
             AppPreferences.setLoggedIn(account.getEmail(), appPreferences);
+            AppPreferences.setUserName(account.getDisplayName(), appPreferences);
             goToMainActivity();
 //            finish();
         }
@@ -111,7 +112,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         if (inputsAreOk()) {
             hideKeyboard();
             progressDialog.show();
-            FirebaseUtils.signIn(new User(email, password), new Callback<Boolean>() {
+            FirebaseUtils.signIn(new User(email, password), appPreferences, new Callback<Boolean>() {
                 @Override
                 public void call(Boolean aBoolean) {
                     progressDialog.dismiss();

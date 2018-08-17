@@ -5,14 +5,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.example.dell.newsarticlesummarizer.BaseActivity;
-
-import java.util.prefs.Preferences;
-import java.util.prefs.PreferencesFactory;
-
 public class AppPreferences {
 
     private static final String USER_LOGGED_IN = "USER_LOGGED_IN";
+    private static final String USER_NAME = "USER_NAME";
 
     public static SharedPreferences getInstance(Context activity){
         return PreferenceManager.getDefaultSharedPreferences(activity);
@@ -33,5 +29,13 @@ public class AppPreferences {
 
     public static String getUserEmail(Activity activity){
         return PreferenceManager.getDefaultSharedPreferences(activity).getString(USER_LOGGED_IN, "");
+    }
+
+    public static void setUserName(String userName, SharedPreferences preferences) {
+        preferences.edit().putString(USER_NAME, userName).apply();
+    }
+
+    public static String getUserName(SharedPreferences preferences) {
+        return preferences.getString(USER_NAME, "");
     }
 }

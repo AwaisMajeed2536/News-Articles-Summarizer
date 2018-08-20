@@ -49,10 +49,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         findViewById(R.id.login_btn).setOnClickListener(this);
         emailEt = findViewById(R.id.email_login);
         passwordEt = findViewById(R.id.pasword_login);
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Validating Credentials");
-        progressDialog.setMessage("please wait...");
-        progressDialog.setCancelable(false);
         findViewById(R.id.sign_up_link).setOnClickListener(this);
 
         /*Google buttton initialization*/
@@ -111,7 +107,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void login() {
         if (inputsAreOk()) {
             hideKeyboard();
-            progressDialog.show();
+            progressDialog = showProgressDialog("Validating Credentials", "Please wait...") ;
             FirebaseUtils.signIn(new User(email, password), appPreferences, new Callback<Boolean>() {
                 @Override
                 public void call(Boolean aBoolean) {

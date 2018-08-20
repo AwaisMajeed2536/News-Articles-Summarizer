@@ -1,28 +1,29 @@
 package com.example.dell.newsarticlesummarizer.models;
 
+import java.util.List;
+
 public class News {
+    private String newsName;
+    private List<Article> articleList;
 
-    private String title;
-    private String url;
-
-    public News(String title, String url) {
-        this.title = title;
-        this.url = url;
+    public News(String newsName, List<Article> articleList) {
+        this.newsName = newsName;
+        this.articleList = articleList;
     }
 
-    public String getTitle() {
-        return title;
+    public String getNewsName() {
+        return newsName;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setNewsName(String newsName) {
+        this.newsName = newsName;
     }
 
-    public String getUrl() {
-        return url;
+    public List<Article> getArticleList() {
+        return articleList;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setArticleList(List<Article> articleList) {
+        this.articleList = articleList;
     }
 }

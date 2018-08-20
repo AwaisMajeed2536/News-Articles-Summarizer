@@ -1,6 +1,6 @@
 package com.example.dell.newsarticlesummarizer.ui;
 
-import android.content.SharedPreferences;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,8 +10,9 @@ import android.view.MenuItem;
 import com.example.dell.newsarticlesummarizer.BaseActivity;
 import com.example.dell.newsarticlesummarizer.R;
 import com.example.dell.newsarticlesummarizer.adapters.NewsAdapter;
+import com.example.dell.newsarticlesummarizer.interfaces.Callback;
 import com.example.dell.newsarticlesummarizer.models.News;
-import com.example.dell.newsarticlesummarizer.utils.AppPreferences;
+import com.example.dell.newsarticlesummarizer.utils.FirebaseUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +20,7 @@ import java.util.List;
 public class NewsPaperActivity extends BaseActivity{
     private RecyclerView rvArcticles;
     private NewsAdapter articlesAdapter;
-    private List<News> articleList = new ArrayList<>();
-    private SharedPreferences preferences;
+    private List<News> newsList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,24 +29,22 @@ public class NewsPaperActivity extends BaseActivity{
 //        getActionBar().setTitle("Hello world App");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("News List");
-        preferences = AppPreferences.getInstance(this);
         rvArcticles = findViewById(R.id.rvArticles);
         rvArcticles.setLayoutManager(new LinearLayoutManager(this));
-        articleList = getNewsList();
-        articlesAdapter = new NewsAdapter(NewsPaperActivity.this, articleList);
-        rvArcticles.setAdapter(articlesAdapter);
-
-
-//        FloatingActionButton doneBtn = findViewById(R.id.doneBtn);
-
-//        doneBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(Utils.isEmpty(selectedList)) {
-//                    showError(getString(R.string.selected_article_empty));
-//                }
-//            }
-//        });
+        final ProgressDialog progressDialog = showProgressDialog("Loading News", "Please wait...");
+        FirebaseUtils.getNewsList(new Callback<List<News>>() {
+            @Override
+            public void call(List<News> news) {
+                progressDialog.dismiss();
+                newsList = news;
+                if(newsList == null) {
+                    showError("Something went wrong please try again!");
+                    return;
+                }
+                articlesAdapter = new NewsAdapter(NewsPaperActivity.this, newsList);
+                rvArcticles.setAdapter(articlesAdapter);
+            }
+        });
     }
 
     @Override
@@ -61,14 +59,5 @@ public class NewsPaperActivity extends BaseActivity{
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
-    }
-
-    private List<News> getNewsList() {
-        List<News> newsList = new ArrayList<>();
-        newsList.add(new News("Pakistan Observer","https://pakobserver.net/category/islamabad/page/1"));
-        newsList.add(new News("Dawn", "https://www.dawn.com/newspaper/islamabad"));
-        newsList.add(new News("The News", "https://www.thenews.com.pk/print/category/islamabad"));
-        newsList.add(new News("Tribune", "https://tribune.com.pk/islamabad/"));
-        return newsList;
     }
 }

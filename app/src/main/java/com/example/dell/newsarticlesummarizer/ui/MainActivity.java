@@ -1,5 +1,6 @@
 package com.example.dell.newsarticlesummarizer.ui;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,9 +18,11 @@ import android.widget.TextView;
 import com.example.dell.newsarticlesummarizer.BaseActivity;
 import com.example.dell.newsarticlesummarizer.R;
 import com.example.dell.newsarticlesummarizer.adapters.ArticlesAdapter;
+import com.example.dell.newsarticlesummarizer.adapters.NewsAdapter;
 import com.example.dell.newsarticlesummarizer.interfaces.Callback;
 import com.example.dell.newsarticlesummarizer.interfaces.OnItemClickListener;
 import com.example.dell.newsarticlesummarizer.models.Article;
+import com.example.dell.newsarticlesummarizer.models.News;
 import com.example.dell.newsarticlesummarizer.services.GoogleApi;
 import com.example.dell.newsarticlesummarizer.utils.AppPreferences;
 import com.example.dell.newsarticlesummarizer.utils.FirebaseUtils;
@@ -30,12 +33,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, OnItemClickListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     private RecyclerView rvArcticles;
-    private ArticlesAdapter articlesAdapter;
-    private List<Article> articleList = new ArrayList<>();
-    private List<Article> selectedList = new ArrayList<>();
+    private NewsAdapter articlesAdapter;
+    private List<News> newsList = new ArrayList<>();
     private SharedPreferences preferences;
     private TextView emailTv;
     private TextView nameTv;
@@ -50,18 +52,18 @@ public class MainActivity extends BaseActivity
         preferences = AppPreferences.getInstance(this);
         rvArcticles = findViewById(R.id.rvArticles);
         rvArcticles.setLayoutManager(new LinearLayoutManager(this));
-        FirebaseUtils.getArticlesList(new Callback<List<Article>>() {
+        final ProgressDialog progressDialog = showProgressDialog("Loading News", "Please wait...");
+        FirebaseUtils.getNewsList(new Callback<List<News>>() {
             @Override
-            public void call(List<Article> articles) {
-                articleList = articles;
-                if(articles == null) {
-                    showError("Error in connection!");
-                } else if(articles.size() == 0) {
-                    showError("List of articles is empty");
-                } else {
-                    articlesAdapter = new ArticlesAdapter(MainActivity.this, articleList, MainActivity.this);
-                    rvArcticles.setAdapter(articlesAdapter);
+            public void call(List<News> news) {
+                progressDialog.dismiss();
+                newsList = news;
+                if(newsList == null) {
+                    showError("Something went wrong please try again!");
+                    return;
                 }
+                articlesAdapter = new NewsAdapter(MainActivity.this, newsList);
+                rvArcticles.setAdapter(articlesAdapter);
             }
         });
 //        FloatingActionButton doneBtn = findViewById(R.id.doneBtn);
@@ -106,11 +108,7 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.show_articles) {
-            Intent intent = new Intent(this, ArticlesActivity.class);
-            startActivity(intent);
-            // Handle the camera action
-        } else if (id == R.id.show_news) {
+        if (id == R.id.show_news) {
             startActivity(new Intent(this, NewsPaperActivity.class));
         } else if (id == R.id.change_name) {
             startActivity(new Intent(this, ChangeNameActivity.class));
@@ -143,18 +141,6 @@ public class MainActivity extends BaseActivity
                         finish();
                     }
                 });
-    }
-
-    @Override
-    public void onItemClick(int position) {
-        Article article = articleList.get(position);
-        article.setSelected(!article.isSelected());
-        if(article.isSelected()){
-            selectedList.add(article);
-        } else {
-            selectedList.remove(article);
-        }
-        articlesAdapter.notifyItemChanged(position);
     }
 
 //    private List<Article> getArticleList() {

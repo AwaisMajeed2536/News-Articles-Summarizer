@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.example.dell.newsarticlesummarizer.interfaces.Callback;
 import com.example.dell.newsarticlesummarizer.models.Article;
+import com.example.dell.newsarticlesummarizer.models.News;
 import com.example.dell.newsarticlesummarizer.models.User;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -136,9 +137,9 @@ public class FirebaseUtils {
         });
     }
 
-    public static void getArticlesList(final Callback<List<Article>> callback) {
+    public static void getArticlesList(String newsTitle, final Callback<List<Article>> callback) {
         DatabaseReference databaseReference  = FirebaseDatabase.getInstance()
-                .getReferenceFromUrl(DATABASE_URL);
+                .getReferenceFromUrl(DATABASE_URL + newsTitle);
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -148,6 +149,27 @@ public class FirebaseUtils {
                     articleList.add(post);
                 }
                 callback.call(articleList);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                callback.call(null);
+            }
+        });
+    }
+
+    public static void getNewsList(final Callback<List<News>> callback) {
+        DatabaseReference databaseReference  = FirebaseDatabase.getInstance()
+                .getReferenceFromUrl(DATABASE_URL);
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<News> newsList = new ArrayList<>();
+                List<Article> articleList = new ArrayList<>();
+                for(DataSnapshot newsSnap: dataSnapshot.getChildren()) {
+                    newsList.add(new News(newsSnap.getKey(), articleList));
+                }
+                callback.call(newsList);
             }
 
             @Override

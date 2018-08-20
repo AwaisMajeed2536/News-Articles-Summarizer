@@ -1,5 +1,6 @@
 package com.example.dell.newsarticlesummarizer;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
@@ -35,5 +36,14 @@ public abstract class BaseActivity extends AppCompatActivity {
         } catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public ProgressDialog showProgressDialog(String title, String message) {
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle(title);
+        progressDialog.setMessage(message);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+        return progressDialog;
     }
 }

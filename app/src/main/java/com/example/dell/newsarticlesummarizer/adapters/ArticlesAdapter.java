@@ -2,42 +2,31 @@ package com.example.dell.newsarticlesummarizer.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.style.TtsSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.VideoView;
 
 import com.example.dell.newsarticlesummarizer.R;
 import com.example.dell.newsarticlesummarizer.interfaces.OnItemClickListener;
 import com.example.dell.newsarticlesummarizer.models.Article;
 import com.example.dell.newsarticlesummarizer.ui.WebViewActvity;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.ArticlesViewHolder> {
 
     private List<Article> articles = new ArrayList<>();
     private Context context;
-    private OnItemClickListener listener;
 
-    public ArticlesAdapter(Context context, List<Article> articles, OnItemClickListener listener) {
+    public ArticlesAdapter(Context context, List<Article> articles) {
         this.articles = articles;
         this.context = context;
-        this.listener = listener;
     }
 
     @NonNull
@@ -55,12 +44,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         holder.tvArticleSummary.setText(article.getLinkSummary());
 //        holder.ivArticleImage.setImageURI(Uri.parse(article.getImageUrl()));
 //        holder.tvArticleDate.setText(article.getArticleDate());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClick(position);
-            }
-        });
 
         holder.openArticleBtn.setOnClickListener(new View.OnClickListener() {
             @Override

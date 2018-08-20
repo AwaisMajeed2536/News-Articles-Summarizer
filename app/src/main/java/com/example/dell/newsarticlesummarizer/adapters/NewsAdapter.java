@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import com.example.dell.newsarticlesummarizer.R;
 import com.example.dell.newsarticlesummarizer.models.News;
-import com.example.dell.newsarticlesummarizer.ui.WebViewActvity;
+import com.example.dell.newsarticlesummarizer.ui.ArticlesActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,17 +37,17 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticlesViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ArticlesViewHolder holder, final int position) {
-        final News article = articles.get(position);
+        final News singleNews = articles.get(position);
         holder.llArticleView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
-        holder.tvArticleHeading.setText(article.getTitle());
+        holder.tvArticleHeading.setText(singleNews.getNewsName());
 //        holder.ivArticleImage.setImageURI(Uri.parse(article.getImageUrl()));
 //        holder.tvArticleDate.setText(article.getArticleDate());
 
-        holder.openArticleBtn.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, WebViewActvity.class);
-                intent.putExtra(WebViewActvity.WEB_URL, article.getUrl());
+                Intent intent = new Intent(context, ArticlesActivity.class);
+                intent.putExtra(ArticlesActivity.MODEL_NAME, singleNews.getNewsName());
                 context.startActivity(intent);
             }
         });
@@ -63,9 +63,6 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticlesViewHo
         private TextView tvArticleHeading;
         private Button openArticleBtn;
         private TextView tvArticleSummary;
-//        private TextView tvArticleDate;
-//        private ImageView ivArticleImage;
-//        private VideoView vvArticleVideo;
 
         public ArticlesViewHolder(View itemView) {
             super(itemView);
@@ -74,9 +71,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticlesViewHo
             tvArticleHeading = itemView.findViewById(R.id.tvArticleHeading);
             openArticleBtn = itemView.findViewById(R.id.open_article_btn);
             tvArticleSummary = itemView.findViewById(R.id.tvArticleSummary);
-//            tvArticleDate = itemView.findViewById(R.id.tvArticleDate);
-//            ivArticleImage = itemView.findViewById(R.id.ivArticleImage);
-//            vvArticleVideo = itemView.findViewById(R.id.vvArticleVideo);
+            openArticleBtn.setVisibility(View.GONE);
         }
     }
 }

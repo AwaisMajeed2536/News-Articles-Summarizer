@@ -5,12 +5,8 @@
 
     <group android:checkableBehavior="single">
         <item
-        android:id="@+id/show_articles"
-        android:icon="@drawable/ic_menu_camera"
-        android:title="Show Articles" />
-        <item
             android:id="@+id/show_news"
-            android:icon="@drawable/ic_menu_share"
+            android:icon="@drawable/ic_menu_camera"
             android:title="Show News" />
         <item
             android:id="@+id/change_name"

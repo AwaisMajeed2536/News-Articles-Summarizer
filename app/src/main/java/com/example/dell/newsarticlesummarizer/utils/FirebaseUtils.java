@@ -36,7 +36,7 @@ public class FirebaseUtils {
                 } else {
                     User data = dataSnapshot.getValue(User.class);
                     if (data != null && user.getPassword().equals(data.getPassword())) {
-                        AppPreferences.setUserName(user.getUsername(), appPreferences);
+                        AppPreferences.setUserName(data.getUsername(), appPreferences);
                         callback.call(true);
 //                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     } else {

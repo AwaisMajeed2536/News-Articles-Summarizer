@@ -1,6 +1,8 @@
 package com.example.dell.newsarticlesummarizer.adapters;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -48,9 +50,18 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
         holder.openArticleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, WebViewActvity.class);
-                intent.putExtra(WebViewActvity.WEB_URL, article.getLinkURL());
-                context.startActivity(intent);
+//                Intent intent = new Intent(context, WebViewActvity.class);
+//                intent.putExtra(WebViewActvity.WEB_URL, article.getLinkURL());
+//                context.startActivity(intent);
+                new AlertDialog.Builder(context)
+                        .setMessage(article.getLinkSummary())
+                        .setCancelable(true)
+                        .setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        }).show();
             }
         });
     }

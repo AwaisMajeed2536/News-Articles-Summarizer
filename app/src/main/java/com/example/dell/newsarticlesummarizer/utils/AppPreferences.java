@@ -51,6 +51,10 @@ public class AppPreferences {
     }
 
     public static void saveImageAndPath(Bitmap bm, SharedPreferences preferences) {
+        if (bm == null){
+            preferences.edit().putString(DP_KEY, "").apply();
+            return;
+        }
         String root = Environment.getExternalStorageDirectory().toString();
         File myDir = new File(root + "/req_images");
         myDir.mkdirs();

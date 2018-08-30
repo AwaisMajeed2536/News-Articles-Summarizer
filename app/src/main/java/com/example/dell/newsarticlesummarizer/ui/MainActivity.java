@@ -125,6 +125,7 @@ public class MainActivity extends BaseActivity
             } else {
                 AppPreferences.setLoggedIn(null, preferences);
                 AppPreferences.setUserName(null, preferences);
+                AppPreferences.saveImageAndPath(null, preferences);
                 finish();
             }
         }/* else if (id == R.id.nav_share) {

@@ -56,6 +56,7 @@ public class ChangeNameActivity extends BaseActivity {
         progressDialog.show();
         String firstName = etFirstName.getText().toString();
         String lastName = etLastName.getText().toString();
+        AppPreferences.setUserName(firstName + " " + lastName, AppPreferences.getInstance(this));
         FirebaseUtils.changeName(firstName + " " + lastName, AppPreferences.getUserEmail(this), new Callback<Boolean>() {
             @Override
             public void call(Boolean aBoolean) {

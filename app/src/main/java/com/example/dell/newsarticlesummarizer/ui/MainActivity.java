@@ -3,7 +3,9 @@ package com.example.dell.newsarticlesummarizer.ui;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,15 +15,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dell.newsarticlesummarizer.BaseActivity;
 import com.example.dell.newsarticlesummarizer.R;
-import com.example.dell.newsarticlesummarizer.adapters.ArticlesAdapter;
 import com.example.dell.newsarticlesummarizer.adapters.NewsAdapter;
 import com.example.dell.newsarticlesummarizer.interfaces.Callback;
-import com.example.dell.newsarticlesummarizer.interfaces.OnItemClickListener;
-import com.example.dell.newsarticlesummarizer.models.Article;
 import com.example.dell.newsarticlesummarizer.models.News;
 import com.example.dell.newsarticlesummarizer.services.GoogleApi;
 import com.example.dell.newsarticlesummarizer.utils.AppPreferences;
@@ -33,14 +34,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
 
+    static final int REQUEST_IMAGE_CAPTURE = 1;
     private RecyclerView rvArcticles;
     private NewsAdapter articlesAdapter;
     private List<News> newsList = new ArrayList<>();
     private SharedPreferences preferences;
     private TextView emailTv;
     private TextView nameTv;
+    private ImageView dpIv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,7 @@ public class MainActivity extends BaseActivity
             public void call(List<News> news) {
                 progressDialog.dismiss();
                 newsList = news;
-                if(newsList == null) {
+                if (newsList == null) {
                     showError("Something went wrong please try again!");
                     return;
                 }
@@ -87,6 +90,8 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
         emailTv = navigationView.getHeaderView(0).findViewById(R.id.emailTv);
         nameTv = navigationView.getHeaderView(0).findViewById(R.id.nameTv);
+        dpIv = navigationView.getHeaderView(0).findViewById(R.id.dpIv);
+        dpIv.setOnClickListener(this);
         nameTv.setText(AppPreferences.getUserName(preferences));
         emailTv.setText(AppPreferences.getUserEmail(preferences));
     }
@@ -115,7 +120,7 @@ public class MainActivity extends BaseActivity
         } else if (id == R.id.change_password) {
             startActivity(new Intent(this, ChangePasswordActivity.class));
         } else if (id == R.id.sign_out) {
-            if(GoogleApi.getAccount(this) != null) {
+            if (GoogleApi.getAccount(this) != null) {
                 signOut();
             } else {
                 AppPreferences.setLoggedIn(null, preferences);
@@ -128,7 +133,7 @@ public class MainActivity extends BaseActivity
 
         }*/
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
@@ -143,7 +148,18 @@ public class MainActivity extends BaseActivity
                 });
     }
 
-//    private List<Article> getArticleList() {
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.dpIv) {
+            if (hasPermissions())
+                dispatchTakePictureIntent();
+            else {
+                requestPermissions();
+            }
+        }
+    }
+
+    //    private List<Article> getArticleList() {
 //        int i;
 //        List<Article> articles = new ArrayList<>();
 //        for(i = 0; i < 10; i++) {
@@ -151,4 +167,37 @@ public class MainActivity extends BaseActivity
 //        }
 //        return articles;
 //    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (AppPreferences.getDpImage(preferences) != null) {
+            dpIv.setImageBitmap(AppPreferences.getDpImage(preferences));
+        }
+        nameTv.setText(AppPreferences.getUserName(preferences));
+        emailTv.setText(AppPreferences.getUserEmail(preferences));
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        dispatchTakePictureIntent();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            dpIv.setImageBitmap(imageBitmap);
+            AppPreferences.saveImageAndPath(imageBitmap, preferences);
+        }
+    }
 }

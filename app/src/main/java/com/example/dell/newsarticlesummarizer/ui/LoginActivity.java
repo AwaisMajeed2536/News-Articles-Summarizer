@@ -60,7 +60,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onStart() {
         super.onStart();
-        if(AppPreferences.isLoggedIn(appPreferences)) {
+        if (AppPreferences.isLoggedIn(appPreferences)) {
             goToMainActivity();
             finish();
         } else {
@@ -107,7 +107,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     private void login() {
         if (inputsAreOk()) {
             hideKeyboard();
-            progressDialog = showProgressDialog("Validating Credentials", "Please wait...") ;
+            progressDialog = showProgressDialog("Validating Credentials", "Please wait...");
             FirebaseUtils.signIn(new User(email, password), appPreferences, new Callback<Boolean>() {
                 @Override
                 public void call(Boolean aBoolean) {
@@ -143,6 +143,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             updateUI(account);
+            User user = new User();
+            user.setEmail(account.getEmail());
+            user.setPassword("GMAIL_USER");
+            user.setUsername(account.getDisplayName());
+            registerUser(user);
         } catch (ApiException e) {
             Log.w("Google Error", "signInResult:failed code=" + e.getStatusCode());
             updateUI(null);
@@ -170,5 +175,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         email = emailEt.getText().toString();
         password = passwordEt.getText().toString();
         return true;
+    }
+
+    private void registerUser(User userData) {
+        progressDialog.show();
+        FirebaseUtils.signUp(userData, new Callback<Boolean>() {
+            @Override
+            public void call(Boolean aBoolean) {
+                progressDialog.dismiss();
+            }
+        });
     }
 }

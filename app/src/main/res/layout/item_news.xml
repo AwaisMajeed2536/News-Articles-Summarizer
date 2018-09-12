@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/llArticleView"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_50sdp"
+    android:layout_margin="@dimen/_8sdp"
+    android:background="@color/white"
+    android:padding="@dimen/_6sdp"
+    android:elevation="@dimen/_5sdp">
+
+    <TextView
+        android:id="@+id/newsNameTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingBottom="@dimen/_5sdp"
+        android:paddingEnd="@dimen/_24sdp"
+        android:paddingStart="@dimen/_4sdp"
+        android:paddingTop="@dimen/_5sdp"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_22ssp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/addBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_favorite" />
+</RelativeLayout>

@@ -9,11 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.dell.newsarticlesummarizer.R;
 import com.example.dell.newsarticlesummarizer.models.News;
 import com.example.dell.newsarticlesummarizer.ui.ArticlesActivity;
+import com.example.dell.newsarticlesummarizer.utils.AppPreferences;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,18 +33,32 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticlesViewHo
     @NonNull
     @Override
     public ArticlesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_article, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news, parent, false);
         return new ArticlesViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ArticlesViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final ArticlesViewHolder holder, final int position) {
         final News singleNews = articles.get(position);
         holder.llArticleView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
-        holder.tvArticleHeading.setText(singleNews.getNewsName());
-//        holder.ivArticleImage.setImageURI(Uri.parse(article.getImageUrl()));
-//        holder.tvArticleDate.setText(article.getArticleDate());
-
+        holder.newsNameTv.setText(singleNews.getNewsName());
+        if (AppPreferences.isAddedToFavorites(context, singleNews.getNewsName())) {
+            holder.addBtn.setImageResource(R.drawable.ic_favorite_full);
+        } else {
+            holder.addBtn.setImageResource(R.drawable.ic_favorite);
+        }
+        holder.addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (AppPreferences.isAddedToFavorites(context, singleNews.getNewsName())) {
+                    holder.addBtn.setImageResource(R.drawable.ic_favorite);
+                    AppPreferences.removeFromFavorites(context, singleNews.getNewsName());
+                } else {
+                    holder.addBtn.setImageResource(R.drawable.ic_favorite_full);
+                    AppPreferences.addToFavorites(context, singleNews.getNewsName());
+                }
+            }
+        });
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,18 +76,15 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ArticlesViewHo
 
     class ArticlesViewHolder extends RecyclerView.ViewHolder {
         private View llArticleView;
-        private TextView tvArticleHeading;
-        private Button openArticleBtn;
-        private TextView tvArticleSummary;
+        private TextView newsNameTv;
+        private ImageView addBtn;
 
         public ArticlesViewHolder(View itemView) {
             super(itemView);
             llArticleView = itemView.findViewById(R.id.llArticleView);
             llArticleView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
-            tvArticleHeading = itemView.findViewById(R.id.tvArticleHeading);
-            openArticleBtn = itemView.findViewById(R.id.open_article_btn);
-            tvArticleSummary = itemView.findViewById(R.id.tvArticleSummary);
-            openArticleBtn.setVisibility(View.GONE);
+            newsNameTv = itemView.findViewById(R.id.newsNameTv);
+            addBtn = itemView.findViewById(R.id.addBtn);
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.example.dell.newsarticlesummarizer.ui;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -11,6 +12,7 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -18,6 +20,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.dell.newsarticlesummarizer.BaseActivity;
 import com.example.dell.newsarticlesummarizer.R;
@@ -113,8 +116,21 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.show_news) {
-            startActivity(new Intent(this, NewsPaperActivity.class));
+        if (id == R.id.show_favs) {
+            final String[] favsList = AppPreferences.getFavorites(this);
+            if (favsList == null || favsList.length == 0) {
+                Toast.makeText(this, "No Favorites!", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            new AlertDialog.Builder(this).setTitle("Favorites")
+                    .setSingleChoiceItems(favsList, -1, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(MainActivity.this, ArticlesActivity.class);
+                            intent.putExtra(ArticlesActivity.MODEL_NAME, favsList[which]);
+                            startActivity(intent);
+                        }
+                    }).create().show();
         } else if (id == R.id.change_name) {
             startActivity(new Intent(this, ChangeNameActivity.class));
         } else if (id == R.id.change_password) {

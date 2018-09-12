@@ -47,7 +47,7 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
 //        holder.ivArticleImage.setImageURI(Uri.parse(article.getImageUrl()));
 //        holder.tvArticleDate.setText(article.getArticleDate());
 
-        holder.openArticleBtn.setOnClickListener(new View.OnClickListener() {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                Intent intent = new Intent(context, WebViewActvity.class);
@@ -74,7 +74,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
     class ArticlesViewHolder extends RecyclerView.ViewHolder {
         private View llArticleView;
         private TextView tvArticleHeading;
-        private Button openArticleBtn;
         private TextView tvArticleSummary;
 //        private TextView tvArticleDate;
 //        private ImageView ivArticleImage;
@@ -85,7 +84,6 @@ public class ArticlesAdapter extends RecyclerView.Adapter<ArticlesAdapter.Articl
             llArticleView = itemView.findViewById(R.id.llArticleView);
             llArticleView.setBackgroundColor(ContextCompat.getColor(context, R.color.white));
             tvArticleHeading = itemView.findViewById(R.id.tvArticleHeading);
-            openArticleBtn = itemView.findViewById(R.id.open_article_btn);
             tvArticleSummary = itemView.findViewById(R.id.tvArticleSummary);
 //            tvArticleDate = itemView.findViewById(R.id.tvArticleDate);
 //            ivArticleImage = itemView.findViewById(R.id.ivArticleImage);
